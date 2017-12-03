@@ -1,0 +1,117 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li ><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li ><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li ><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li ><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li ><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li ><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li class="active"><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li ><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>常见问题</h1>
+        <h2>Issue 反馈</h2>
+        <p>建议提在<a href="https://github.com/TinkerPatch/tinkerpatch-sdk/issues">TinkerPatch Issue</a>上，方便跟进状态。
+        也可以加入<a href="https://slack.tinkerpatch.com">Slack Group</a>来进行讨论。
+        作者也活跃在Tinker官方的QQ群（377388954）。</p>
+        <h2>TinkerPatch 平台与 Tinker 项目的关系？</h2>
+        <p>TinkerPatch 平台是为了更加方便大家使用 Tinker 项目而搭建的，它的 Github 地址为<a href="https://github.com/TinkerPatch">TinkerPatch</a>。后期平台将逐步迭代，例如推出ABTest/安全模式等功能。</p>
+        <h2>TinkerPatch 平台是否有补丁 Push 功能？</h2>
+        <p>TinkerPatch 平台默认不提供补丁 Push 推送功能，大家利用自己的 Push 通道可以很方便的与平台结合起来。例如定义补丁更新的 Push 消息类型，客户端收到消息后调用以下函数即可：</p>
+        <pre><code>TinkerPatch.with().fetchPatchUpdate(true);</code></pre>
+        <h2>TinkerPatch 自动反射 Application 的风险？</h2>
+        <p>Tinker 为了实现 Application 类可修改，需要对 Application 做改造，详细可参考<a href="https://github.com/Tencent/tinker/wiki/Tinker-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%A9%E5%B1%95#%E8%87%AA%E5%AE%9A%E4%B9%89application%E7%B1%BB">自定义Application类
+        </a>.</p>
+        <p>这对很多应用来说，很大程度造成不少的接入成本。 TinkerPatch 平台通过自动反射 Application，可以实现无缝接入。<strong>事实上，对于反射失败的情况，我们会自动回退到代理 Application 生命周期模式，防止因为反射失败而造成应用无法启动的问题。</strong></p>
+        <p>通过线上统计，大约有 1/1W的反射失败率。我们更加推荐大家使用 Tinker 的方式改造自身的 Application, 使兼容性高。</p>
+        <h2>TinkerPatch 自动反射 Library 的风险？</h2>
+        <p>Tinker 默认没有直接将补丁的 library 路径添加到 DexPathList 中，这里主要是考虑在多abi的情况下，某些机器获取的并不准确。我们需要手动加载补丁的 Library 文件，对于第三方的库文件更加难控制。</p>
+        <p>TinkerPatch 平台采用了严格的算法判别系统最终采用的 abi，线上统计的反射成功率在99.98%以上。在反射失败时，也做了自动回退等实现。大家可以根据自己的项目情况，选择使用 Tinker 推荐的方式，还是直接反射的方式。</p>
+        <p>这里需要注意的是，只有调用了 <code>reflectPatchLibrary</code> 反射接口后面加载的补丁 Library 才会生效。</p>
+        <h2>TinkerPatch SDK 采用的 TinkerId？</h2>
+        <p>TinkerPatch SDK 默认采用 appVersion 作为 TinkerId, 我们需要保证每个发布出去的基准安装包的 appVersion 都不一致。</p>
+        <p>我们可以使用 versionName 或者 githash 作为 appVersion.</p>
+        <h2>如何回滚</h2>
+        <p>可以简单删除当前appVersion控件来完成回滚，客户端会回滚到没有安装补丁的状态。后续可以重新建立同名appVersion。</p>
+        <h2>Bad notification for startForeground</h2>
+        <p>如果出现如下错误信息,请检查是否在<code>AndroidManifest.xml</code>配置了icon信息。</p>
+        <pre><code>android.app.RemoteServiceException: Bad notification for startForeground: java.lang.RuntimeException: invalid service notification: Notification(pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE)</code></pre>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>

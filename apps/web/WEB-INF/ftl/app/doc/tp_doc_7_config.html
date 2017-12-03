@@ -1,0 +1,114 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li ><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li ><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li ><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li ><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li class="active"><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li ><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li ><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li ><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>在线参数</h1>
+        <p>TinkerPatch 平台附带了在线参数功能，可以直接向 APP 下发多个固定的参数，对APP进行动态配置。</p>
+        <h2>使用</h2>
+        <p>在每个 APP 侧边栏的在线参数入口进入，新增你想要下发的参数名和参数值，例如 <code>参数名:test</code> <code>参数值:tinker</code>。</p>
+        <p><img src="/Public/mdt/imgs/online.png" alt="" /></p>
+        <p>APP 端调用 <a href="https://github.com/TinkerPatch/tinkerpatch-sdk/blob/master/tinkerpatch-sdk/src/main/java/com/tinkerpatch/sdk/TinkerPatch.java">TinkerPatch.java</a>方法 <code>fetchDynamicConfig</code> 就会在调用处发请求获取刚才设置的在线参数。</p>
+        <p>服务器返回类型为 Hashmap&lt;String, String&gt;, 如: {&quot;aa&quot;:&quot;bb&quot;, &quot;test&quot;:&quot;tinker&quot;}. </p>
+        <h2>设置</h2>
+        <p>可以通过 <a href="https://github.com/TinkerPatch/tinkerpatch-sdk/blob/master/tinkerpatch-sdk/src/main/java/com/tinkerpatch/sdk/callback/ConfigRequestCallback.java">ConfigRequestCallback.java</a> 接口设置 在线参数回调的callback:</p>
+        <pre><code>TinkerPatch.with().fetchDynamicConfig(new ConfigRequestCallback() {
+            @Override
+            public void onSuccess(HashMap&lt;String, String&gt; hashMap) {
+            }
+            @Override
+            public void onFail(Exception e) {
+            }
+        }, false);</code></pre>
+        <p>其中参数2表示请求时是否忽略默认的时间间隔限制</p>
+        <p>为了避免重复请求浪费资源，默认 <code>fetchDynamicConfig:</code> 接口请求时间间隔默认为3个小时，也就是3个小时内多次调用 <code>fetchDynamicConfig:</code> 只会请求一次。若想 APP 对在线参数响应更实时，可以通过 <code>setFetchDynamicConfigIntervalByHours</code> 接口修改这个间隔值。</p>
+        <h2>注意</h2>
+        <ol>
+        <li>在线参数功能与 TinkerPatch 补丁下发功能独立，互不影响。</li>
+        <li>在线参数的计费方式同样按请求次数计算，每次访问后台都算一次请求。 </li>
+        </ol>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>

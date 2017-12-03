@@ -1,0 +1,106 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li ><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li class="active"><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li ><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li ><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li ><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li ><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li ><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li ><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>平台使用说明</h1>
+        <h2>第一步 注册 TinkerPatch 平台</h2>
+        <p>首先我们需要注册 TinkerPatch 平台账号，<a href="http://www.tinkerpatch.com/Index/reg">欢迎点击前往注册</a>。</p>
+        <h2>第二步 添加 APP</h2>
+        <p>输入你的 APP 的名称，<a href="http://www.tinkerpatch.com/Apps/newapp">欢迎点击前往</a>.</p>
+        <p><img src="/Public/mdt/imgs/addapp.png" alt="" /></p>
+        <h2>第三步 记录 AppKey</h2>
+        <p>每一个 App 都有一个唯一的 AppKey 作为标识，在客户端需要传入这个值。</p>
+        <p><img src="/Public/mdt/imgs/appkey.png" alt="" /></p>
+        <h2>第四步 添加 APP 版本</h2>
+        <p>每一个 APP 版本对应一个已经发布的 base apk, 这里我们可以使用 APP 版本作为 TinkerID。我们需要保证每个发布的 APK 都采用不用的 APP 版本。</p>
+        <p><img src="/Public/mdt/imgs/addversion.png" alt="" /></p>
+        <h2>第五步 发布补丁</h2>
+        <p>选择一个具体的 APP 版本，可以点击发布新补丁。只需选择生成好的补丁文件，这里建议输入具体的补丁描述，方便历史管理。</p>
+        <p><img src="/Public/mdt/imgs/addpatch.png" alt="" /></p>
+        <p>Tinker Patch平台的使用非常简单，我们下一步需要集成 Tinker Patch 平台客户端的SDK。</p>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>

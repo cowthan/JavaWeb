@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: cowthan_777
+    url: jdbc:mysql://rm-bp16ad3ce8188drq6o.mysql.rds.aliyuncs.com/sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    host: 114.215.81.196
+    port: 6379
+server:
+  context-path: /sell
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+##  path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell.log
+#  level:
+#    com.imooc.LoggerTest: debug
+
+wechat:
+  mpAppId: wxa6eb5377af85e9b8
+  mpAppSecret: 89eae9fdd2af767bd61fc21659320ae0
+  openAppId: wxc121882702034495
+  openAppSecret: 93fe098bd3aa05f1e2e20d4d4a0a058b
+  mchId: 1483469312
+  mchKey: 06C56A89949D617xxxxxxxxxxx
+  keyPath: /var/weixin_cert/h5.p12
+  notifyUrl: http://zebdar.natapp1.cc/sell/pay/notify
+  templateId:
+    orderStatus: e-Cqq67QxD6YNI41iRiqawEYdFavW_7pc7LyEMb-yeQ
+
+projectUrl:
+  wechatMpAuthorize: http://zebdar.natapp1.cc
+  wechatOpenAuthorize: http://zebdar.natapp1.cc
+  sell: http://zebdar.natapp1.cc

@@ -1,0 +1,204 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li ><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li ><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li ><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li ><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li ><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li ><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li class="active"><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>更新日志</h1>
+        <p><strong>2017年11月9日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.2.1 发布</li>
+        <li>基于 Tinker 1.9.1</li>
+        <li>功能: 支持实验功能<code>supportComponent</code>,支持动态新增Activity</li>
+        <li>功能： 支持android gradle plugin 3.0</li>
+        <li>Bugfix: 修复Android O patch过程的一个bug</li>
+        <li>Bugfix: TinkerMultidexConfigTask: FileNotFoundException(manifest_keep.txt)#649</li>
+        <li>Bugfix: 资源合成时需要保持原来的压缩方式</li>
+        <li>Bugfix: 修改判断是否为主进程的方式</li>
+        </ul>
+        <p><strong>2017年8月10日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.8 发布</li>
+        <li>基于 Tinker 1.8.1</li>
+        <li>功能: 支持Android O</li>
+        <li>功能: 在tinkerpatchSupport中增加backupFileNameFormat，来控制备份目录的文件名</li>
+        <li>优化: 补丁后 Android N启动速度</li>
+        <li>Bugfix: 修复RxJava 可能出现的verify error</li>
+        <li>Bugfix: 修复部分CA签名校验不过的问题</li>
+        <li>Bugfix: 修复patchversion没有赋值的问题</li>
+        <li>重构: 在ART平台合并多个classesN.dex到同一个文件，减少多线程dex2oat对系统的影响</li>
+        </ul>
+        <p><strong>2017年5月24日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.7 发布</li>
+        <li>基于 Tinker 1.7.11</li>
+        <li>新增指定requestLoader的接口，可以传入自己实现或者第三方的Httpclient作为tinkerPatch请求的client，<a href="http://tinkerpatch.com/Docs/api">文档 11. 定制加载器模块</a></li>
+        <li>新增Okhttp3Loader和OkhttpLoader</li>
+        <li>Bugfix: 修复1.7.10 版本替换AndroidNClassloader时可能产生found duplicate classes warning</li>
+        <li>Bugfix: 修复自动keep main dex pattern中的问题，将() 改为 (...)</li>
+        <li>Bugfix: 修复坚果Pro 资源Patch异常</li>
+        <li>Bugfix: 修复360加固 Android N上的问题</li>
+        <li>Bugfix: 修复Android O so 反射问题</li>
+        </ul>
+        <p><strong>2017年5月07日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.6 发布</li>
+        <li>基于 Tinker 1.7.9-5f996c9</li>
+        <li>Bugfix: Class XXX has already interned.</li>
+        <li>Bugfix: auto force-jumbo mode has no effect when keepDexApply option was enabled. 避免不必要的loader class changed告警</li>
+        <li>Bugfix: loader class pattern has no effect in 'protected app' mode.</li>
+        <li>Bugfix: NPE when isProtectedApp option is enabled.</li>
+        </ul>
+        <p><strong>2017年4月26日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.5 发布</li>
+        <li>基于 Tinker 1.7.9</li>
+        <li>支持加固App的patch生成，具体请<a href="https://github.com/TinkerPatch/tinkerpatch-flavors-sample">参照</a></li>
+        <li>修复了集成了趣拍sdk的app无法生成patch的问题</li>
+        <li>增加了合成成功的上报</li>
+        <li>增加<code>fetchPatchUpdateAndPollWithInterval</code>接口用于轮询更新</li>
+        </ul>
+        <p><strong>2017年2月26日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.4 发布</li>
+        <li>基于 Tinker 1.7.7</li>
+        <li>增加上报重试保证准确性</li>
+        <li>兼容使用 Java 7 编译</li>
+        <li>重构了若干 Log</li>
+        </ul>
+        <p><strong>2017年2月7日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.3 发布</li>
+        <li>基于 Tinker 1.7.7</li>
+        <li>增加cleanAll接口，用户清除所有tinkerPatch存储的信息</li>
+        <li>重构了若干 Log</li>
+        </ul>
+        <p><strong>2017年1月16日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.1 发布</li>
+        <li>基于 Tinker 1.7.7</li>
+        <li>重构 ProductFlavors 字段</li>
+        <li>兼容 1.0.1 TinkerPatchSupport 字段</li>
+        </ul>
+        <p><strong>2017年1月14日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.1.0 发布</li>
+        <li>基于 Tinker 1.7.7</li>
+        <li>修复反射 Application 在 Android N 上的一些兼容性问题</li>
+        <li>更新 Tinker 内核，优化了异步 Odex 问题</li>
+        <li>增加了对多 Flavor、多 AppVersion 的支持, 修改了 TinkerPatchSupport 的扩展字段</li>
+        <li>修改了 TinkerPatch 的调用时机</li>
+        <li>优化了数据上报的时机</li>
+        </ul>
+        <p><strong>2016年12月27日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.0.1 发布</li>
+        <li>基于 Tinker 1.7.6</li>
+        <li>fix proguard warning 问题</li>
+        <li>fix 一键接入 oncreate 没有回调问题</li>
+        </ul>
+        <p><strong>2016年12月26日</strong></p>
+        <ul>
+        <li>TinkerPatch 1.0.0 发布</li>
+        <li>基于 Tinker 1.7.6</li>
+        <li>实现一键接入 SDK</li>
+        <li>实现自动反射 Application 与 Library</li>
+        <li>实现可选择应用重启时回滚补丁</li>
+        <li>实现补丁管理/重启/文件管理</li>
+        <li>优化 Tinker 的编译参数，实现 TinkerPatchSupport 插件</li>
+        </ul>
+        <p><strong>2016年11月16日</strong></p>
+        <ul>
+        <li>TinkerPatch 0.3.0 发布</li>
+        <li>基于 Tinker 1.7.5</li>
+        <li>将 Tinker 库的引入改为 provided 方式</li>
+        </ul>
+        <p><strong>2016年11月13日</strong></p>
+        <ul>
+        <li>TinkerPatch 0.2.0 第一版本上线</li>
+        <li>基于 Tinker 1.7.5</li>
+        </ul>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>

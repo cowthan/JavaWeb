@@ -1,0 +1,129 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li ><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li ><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li class="active"><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li ><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li ><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li ><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li ><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>灰度与条件下发</h1>
+        <p>TinkerPatch 平台支持补丁的灰度与条件下发。</p>
+        <h2>灰度</h2>
+        <p>在后台发布补丁时可以选择灰度下发，分为按比例灰度与按人数灰度。</p>
+        <h3>按比例灰度</h3>
+        <p>若选择按比例灰度，这个补丁就会按选定的百分比只对这个比例的用户起作用。例如选择灰度 30%，那这个补丁脚本只会在所有接入的设备中随机挑选 30% 的设备生效。</p>
+        <p>灰度发布后后续可以修改这个灰度值，便于逐渐增加灰度数量，直到全量发布。</p>
+        <h3>按人数灰度</h3>
+        <p>按人数灰度可以指定补丁对多少个用户生效，超过设置的人数后不会再生效。例如设置灰度1000人，在1000台设备加载补丁后，后续其他设备都不会加载这个补丁。灰度人数可以修改增加，但不能减少，可以逐渐增加灰度人数，直到全量发布。</p>
+        <h2>条件下发</h2>
+        <p>在后台发布补丁时可以选择条件下发，然后填入条件语句，只有满足条件的设备才会执行这个补丁，条件语句由 key/value/运算符组成，示例：<code>userId==10000876</code>, <code>sdk&gt;19&amp;&amp;isMale==1</code>。</p>
+        <p>条件语句里用到的 key/value 需要事先在 APP 里通过 <code>setPatchCondition:</code> 设置，支持设置多个字段，默认已经内置wifi、sdk、brand、model、cpu等多个字段：</p>
+        <p>这样在下发补丁时填入条件 <code>userId==1000876</code> 后，这个补丁就只对这个用户生效，如果填入 <code>isMale==0</code> 则对这个用户不生效</p>
+        <p>我也可以填入条件 <code>channel==yingyongbao</code> 后，这个补丁就只对应用宝这个渠道有效</p>
+        <h3>条件语句规则</h3>
+        <ol>
+        <li>支持符号 <code>&amp;&amp;</code> <code>||</code> <code>==</code> <code>!=</code> <code>&gt;=</code> <code>&lt;=</code> <code>&gt;</code> <code>&lt;</code>，意思跟程序里一样。</li>
+        <li>用比较符号时 <code>&gt;=</code> <code>&lt;=</code> <code>&gt;</code> <code>&lt;</code> 会把值转为数值进行对比。例如 <code>userId&gt;200000</code>，即使客户端调用 <code>+setupUserData:</code> 接口时设置的 userId 字段是字符串，也会转为数值进行对比。</li>
+        <li>使用 <code>==</code> <code>!=</code> 符号时，会以字符串形式判断是否相等，例如 <code>1.0 == 1</code> 结果是 NO。</li>
+        <li>等式的值不需要引号，字符串也不需要，例如：<code>location!=guangdong</code></li>
+        <li>支持多个条件，例如：<code>userId!=31242&amp;&amp;location==guangdong&amp;&amp;name==tinker</code></li>
+        <li>若多个条件里同时有 <code>&amp;&amp;</code> 和 <code>||</code>，<code>&amp;&amp;</code> 的优先级较高。例如 <code>userId&lt;200000||location==guangdong&amp;&amp;name==tinker</code>，会先分别计算 <code>userId&lt;200000</code> 和 <code>location==guangdong&amp;&amp;name==tinker</code> 的结果，再进行 <code>||</code> 运算。</li>
+        </ol>
+        <h3>条件更新规则</h3>
+        <p>在发布补丁时用条件下发后，发布后可以不断修改条件，但在之前已经命中了条件执行了补丁的设备，不会因为修改条件后变为不命中，也就是说已经命中过条件执行了补丁的设备，不会再被条件的更新影响。举个例子：</p>
+        <p>在发布补丁1时设条件为 <code>userId==1000876</code>，某设备A设置了 <code>{"userId": "1000876"}</code> 命中了这个条件，执行了这个补丁1。设备B设置了 <code>{"userId": "2000876"}</code> 没有命中。</p>
+        <p>接着在后台修改条件为 <code>userId&gt;=2000000</code> ，设备A并不符合这个条件，但因为之前的条件命中过，所以设备A不会再受这个改变影响，继续执行补丁1。设备B命中了这个条件，也执行了补丁1。</p>
+        <p>此外若想撤销条件全量发布，提交空条件即可。</p>
+        <h3>内置信息</h3>
+        <p>默认已经内置wifi、sdk、brand、model、cpu等多个字段, </p>
+        <ol>
+        <li>若只想发给当前是 wifi 连接的用户可以使用：wifi==1</li>
+        <li>若只想发给Dalvik用户，可以使用 sdk&lt;=19</li>
+        <li>其他类同...</li>
+        </ol>
+        <h2>注意事项</h2>
+        <ol>
+        <li><code>setPatchCondition:</code> 接口要在 <code>fetchPatchUpdate:</code> 接口之前调用。</li>
+        </ol>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>

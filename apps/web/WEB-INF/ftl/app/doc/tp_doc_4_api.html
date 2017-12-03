@@ -1,0 +1,268 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li ><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li class="active"><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li ><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li ><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li ><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li ><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li ><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>SDK API</h1>
+        <p>SDK 所有的 API 都位于 <a href="https://github.com/TinkerPatch/tinkerpatch-sdk/blob/master/tinkerpatch-sdk/src/main/java/com/tinkerpatch/sdk/TinkerPatch.java">TinkerPatch.java</a> 中, 我们可以非常简单的使用起来，我们也可以参考 TinkerPatch 中的 <a href="https://github.com/TinkerPatch">Sample</a>.</p>
+        <h2>TinkerPatch 接口</h2>
+        <h3>1. 初始化 SDK</h3>
+        <p>初始化 SDK 有两个接口，推荐使用默认接口</p>
+        <h4>默认接口(推荐使用):</h4>
+        <pre><code>//接口定义
+        public static TinkerPatch init(ApplicationLike applicationLike);
+        //接口使用事例
+        TinkerPatch.init(applicationLike);</code></pre>
+        <p>详细的TinkerPatch SDK的初始化接口：</p>
+        <pre><code>TinkerPatch.init(tinkerApplicationLike)
+            //是否自动反射Library路径,无须手动加载补丁中的So文件 注意,调用在反射接口之后才能生效,你也可以使用Tinker的方式加载Library
+            .reflectPatchLibrary()
+            //向后台获取是否有补丁包更新,默认的访问间隔为3个小时，若参数为true,即每次调用都会真正的访问后台配置
+            //你也可以在用户登录或者APP启动等一些关键路径，使用fetchPatchUpdate(true)强制检查更新
+            .fetchPatchUpdate(false)
+            //设置访问后台补丁包更新配置的时间间隔,默认为3个小时
+            .setFetchPatchIntervalByHours(3)
+            //向后台获得动态配置,默认的访问间隔为3个小时
+            //若参数为true,即每次调用都会真正的访问后台配置
+            .fetchDynamicConfig(new ConfigRequestCallback() {
+                @Override public void onSuccess(HashMap&lt;String, String&gt; hashMap) { }
+                @Override public void onFail(Exception e) { }
+            }, false)
+            //设置访问后台动态配置的时间间隔,默认为3个小时
+            .setFetchDynamicConfigIntervalByHours(3)
+            //设置当前渠道号,对于某些渠道我们可能会想屏蔽补丁功能；设置渠道后,我们就可以使用后台的条件控制渠道更新
+            .setAppChannel("default")
+            //屏蔽部分渠道的补丁功能
+            .addIgnoreAppChannel("googleplay")
+            //设置tinkerpatch平台的条件下发参数
+            .setPatchCondition("test", "1")
+            //设置补丁合成成功后,锁屏重启程序,默认是等应用自然重启
+            .setPatchRestartOnSrceenOff(true)
+            //我们可以通过ResultCallBack设置对合成后的回调,例如弹框什么
+            //注意，setPatchResultCallback 的回调是运行在 intentService 的线程中
+            .setPatchResultCallback(new ResultCallBack() {
+                @Override public void onPatchResult(PatchResult patchResult) {
+                    Log.i(TAG, "onPatchResult callback here");
+                }
+            })
+            //设置收到后台回退要求时,锁屏清除补丁,默认是等主进程重启时自动清除
+            .setPatchRollbackOnScreenOff(true)
+            //我们可以通过RollbackCallBack设置对回退时的回调
+            .setPatchRollBackCallback(new RollbackCallBack() {
+                @Override public void onPatchRollback() {
+                    Log.i(TAG, "onPatchRollback callback here");
+                }
+            });</code></pre>
+        <p>只需要传入 applicationLike 实例即可初始化 SDK。</p>
+        <p><strong>注意，setPatchResultCallback 的回调是运行在 intentService 的线程中。</strong></p>
+        <h4>自定义接口(谨慎使用)：</h4>
+        <p>若我们想自定义 Tinker 中的某个自定义类，而不使用TinkerPatch提供的默认实现，可采用以下接口</p>
+        <pre><code>// 接口定义
+        public static TinkerPatch init(TinkerPatch tinkerPatch);
+        // 接口使用事例
+        TinkerPatch.Builder builder = new TinkerPatch.Builder(applicationLike);
+        // 可自定义以下几个类，大家可以选择需要复写的类
+                // tinker 中的 PatchListener 类
+                builder.listener()
+                // tinker 中的 LoadReporter 类
+               .loadReporter()
+                // tinker 中的 PatchReporter 类
+               .patchReporter()
+               // tinker 中的 ResultServer 类
+               .resultServiceClass()
+               // tinker 中的 AbstractPatch 类
+               .upgradePatch()
+               // tinkrpatch 中的 请求回调类
+               .patchRequestCallback();
+        // 初始化
+        TinkerPatch.init(builder.build());</code></pre>
+        <p>对于 Tinker 的自定义类可参考 Tinker 文档：<a href="https://github.com/Tencent/tinker/wiki/Tinker-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%A9%E5%B1%95">Tinker 自定义扩展</a>。<strong><strong>一般来说，我们并不建议大家自己实现 Tinker的相关自定义类。更建议大家使用 TinkerPatch 的回调接口实现，自定义某些类可能会导致 TinkerPatch 平台的某些上报失效。</strong></strong></p>
+        <p>在初始化 SDK 后， 我们可以通过以下 API 获得 实例</p>
+        <pre><code>TinkerPatch tinkerPatch = TinkerPatch.with();</code></pre>
+        <h3>2. 重定向日志输出</h3>
+        <p>你可以设置自己的Log输出实现：</p>
+        <pre><code>TinkerPatch.setLogIml(imp);</code></pre>
+        <h3>3. 自动加载补丁的 Library</h3>
+        <p>默认 Tinker 中需要手动加载补丁中的 Library 更改， 可参考 Tinker 文档<a href="https://github.com/Tencent/tinker/wiki/Tinker-API%E6%A6%82%E8%A7%88#library%E5%BA%93%E7%9A%84%E5%8A%A0%E8%BD%BD">Library 库的加载</a>. TinkerPatch 平台实现了一键反射 Library 路径，在调用接口后即可自动优先加载补丁中的 Library 文件。</p>
+        <pre><code>TinkerPatch.with().reflectPatchLibrary();</code></pre>
+        <h3>4. 向后台请求补丁升级配置</h3>
+        <p>向后台获取是否有补丁包更新,默认的访问间隔为3个小时,若参数<code>immediately</code>为 true,即每次调用都会真正的访问后台是否有更新。</p>
+        <pre><code>TinkerPatch.with().fetchPatchUpdate(false)；</code></pre>
+        <p><strong>如果你希望补丁更新更佳及时，可以在APP启动或用户登录等一些关键路径，使用 <code>fetchPatchUpdate(true)</code> 强制检查更新，即：</strong></p>
+        <pre><code>TinkerPatch.with().fetchPatchUpdate(true)；</code></pre>
+        <p>我们可以通过以下方法，设置访问的时间间隔，单位为小时。若为 －1，即禁止以后都不再请求后台补丁更新。</p>
+        <pre><code>TinkerPatch.with().setFetchPatchIntervalByHours(1)；</code></pre>
+        <h3>5. 向后台请求在线参数配置</h3>
+        <p>向后台请求在线参数配置，默认的访问间隔为3个小时, 若参数 <code>immediately</code> 为 true, 即每次调用都会真正的访问后台是否有更新。</p>
+        <pre><code>TinkerPatch.with().fetchDynamicConfig(false)；</code></pre>
+        <p>我们也可以通过以下方法，设置访问的时间间隔，单位为小时。若为 －1，即禁止以后都不再请求后台在线配置更新。</p>
+        <pre><code>TinkerPatch.with().setFetchDynamicConfigIntervalByHours(1)；</code></pre>
+        <h3>6. 设置渠道相关信息</h3>
+        <p>设置应用当前的渠道号，若设置具体的渠道号后，我们可以使用后台条件控制渠道更新。</p>
+        <pre><code>TinkerPatch.with().setAppChannel("default");</code></pre>
+        <p>设置渠道号之后，我们也可以对补丁过滤某些掉渠道号，例如 GooglePlay或者使用了加固的360:</p>
+        <pre><code>TinkerPatch.with().addIgnoreAppChannel("googleplay");
+        TinkerPatch.with().addIgnoreAppChannel("360");</code></pre>
+        <h3>7. 更新客户端灰度条件</h3>
+        <p>TinkerPatch 平台支持根据条件下发补丁，我们可以对客户端设置条件属性：</p>
+        <pre><code>TinkerPatch.with().setPatchCondition("name", "simsun");</code></pre>
+        <p>设置的条件数量并不会限制，默认在 SDK 已经集成以下几个条件：</p>
+        <table>
+        <thead>
+        <tr>
+        <th>条件</th>
+        <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>wifi</td>
+        <td>网络是否为wifi, 1为是，0为否</td>
+        </tr>
+        <tr>
+        <td>sdk</td>
+        <td>Build.VERSION.SDK_INT, Android SDK version</td>
+        </tr>
+        <tr>
+        <td>brand</td>
+        <td>Build.BRAND</td>
+        </tr>
+        <tr>
+        <td>model</td>
+        <td>Build.MODEL</td>
+        </tr>
+        <tr>
+        <td>cpu</td>
+        <td>Build.CPU_ABI</td>
+        </tr>
+        </tbody>
+        </table>
+        <p>若使用了 <code>setAppChannel</code> 方法，会增加 <code>channel</code>这一条件。</p>
+        <h3>8. 设置补丁生效策略</h3>
+        <p>TinkerPatch SDK 默认在补丁合成成功后，等应用的主进程重新启动时生效。若我们希望用户可以尽快的生效，可以指定用户锁屏时自动重启应用：</p>
+        <pre><code>// 默认为false
+        TinkerPatch.with().setPatchRestartOnSrceenOff(true);</code></pre>
+        <p>设若我们也不想在锁屏的时候重启，例如弹出对话框咨询。可以采取自定义回调接口：</p>
+        <pre><code>TinkerPatch.with().setPatchResultCallback(new ResultCallBack() {
+                @Override
+                public void onPatchResult(PatchResult patchResult) {
+                    Log.i(TAG, "onPatchResult callback here");
+                }
+        });</code></pre>
+        <h3>9. 设置补丁回滚策略</h3>
+        <p>TinkerPatch 平台支持已经发布补丁的回滚，若我们发现已经发布的补丁出现问题，可以通过发布新补丁或者回滚补丁的方式挽救(注：<strong>可以通过删除整个appVersion的空间来达到回滚的目的，或者发布新的补丁，这里暂不支持删除某个特定的Patch</strong>)。默认我们是等应用主进程重新时删除补丁，若我们希望用户可以尽快的生效，可以指定用户锁屏时自动回滚补丁：</p>
+        <pre><code>// 默认为false
+        TinkerPatch.with().setPatchRollbackOnScreenOff(true);</code></pre>
+        <p>设若我们也不想在锁屏的时候回滚，例如弹出对话框咨询。可以采取自定义回调接口：</p>
+        <pre><code>TinkerPatch.with().setPatchRollBackCallback(new RollbackCallBack() {
+            @Override
+            public void onPatchRollback() {
+                Log.i(TAG, "onPatchRollback callback here");
+            }
+        });</code></pre>
+        <h3>10. 获取补丁版本号</h3>
+        <p>在TinkerPatch sdk 1.1.4 增加的接口，获取当前补丁版本号。</p>
+        <pre><code>TinkerPatch.with().getPatchVersion();</code></pre>
+        <h3>11. 定制加载器模块</h3>
+        <p>在TinkerPatch sdk 1.1.7 在TinkerPatch的builder中增加了传入定制加载器的接口<code>public TinkerPatch.Builder requestLoader(RequestLoader requestLoader)</code>
+        现已支持Okhttp和Okhttp3的加载器。</p>
+        <p>下面已Okhttp3为例，简述使用方法okhttp使用只需把相应的<code>okhttp3</code>更改为<code>okhttp</code>即可：</p>
+        <ol>
+        <li>
+        <p>添加项目<code>dependencies</code>中添加依赖</p>
+        <pre><code>compile("com.tinkerpatch.sdk:tinkerpatch-okhttp3-loader:${TINKERPATCH_VERSION}")</code></pre>
+        </li>
+        <li>在初始化TinkerPatch时，使用builder并传入相应的requetsLoader，代码片段如下：
+        <pre><code>TinkerPatch.init(  
+        new TinkerPatch.Builder(tinkerApplicationLike)
+            .requestLoader(new OkHttp3Loader())
+            .build()
+        )</code></pre></li>
+        <li>其中<code>OkHttp3Loader</code>的构造函数也可直接传入自己App其他api使用的<code>OkHttpClient</code>，已达到复用同一个httpclient的目的。</li>
+        </ol>
+        <p>以上就是 TinkerPatch SDK 常用的 API，若有更多的疑问，欢迎随时<a href="mailto:admin@tinkerpatch.com">咨询我们</a>。</p>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>

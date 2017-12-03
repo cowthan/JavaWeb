@@ -1,0 +1,236 @@
+
+<html>
+        <head>
+                <meta charset="utf-8">
+            <title>文档 - Tinker Platform - Android 热补丁平台</title>
+                <meta name="description" content="Tinker 平台提供 Android APP 热更新服务，APP 接入 Tinker 平台后，可以随时下发补丁包，实时更新APP">    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+            <!-- <link rel="stylesheet" href="/Public/css/flat-ui.min.css" /> -->
+            <link rel="stylesheet" href="/Public/css/main.css?v=1.4" />
+            <link rel="shortcut icon" href="/Public/img/tinker/favicon.ico" type="image/x-icon" />
+        </head>
+        
+        <body>
+            <div class="hd">
+                <div class="wrapper">
+                    <a href="/" class="logo-tinker"></a>
+                    <ul>
+                                                        <li>
+                                <a href="/User" class="">我的帐号</a>
+                                                    </li>                <li><a href="/Index/sdk" class=""> SDK下载 </a></li>
+                        
+                                        <li><a href="/Docs/intro" class="selected"> 文档 </a></li>
+                        
+                            <li><a href="/Bill/index" class="">账单</a></li>
+                        <li><a href="/Price" class="">价格</a></li>
+        
+                        <li><a href="/Apps/index" class="">我的App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main main-doc  ">
+        
+            <div class="wrapper">
+                <div class="doc-cat">
+        
+                    
+                    <div class="doc-cat-item">
+                        <span class="doc-cat-title">平台使用文档</span>
+                        <ul>
+                                <li ><a href="/Doc/tp_doc_1_intro.html">Tinker 平台介绍</a></li>
+                                <li ><a href="/Doc/tp_doc_2_start.html">平台使用说明</a></li>
+                                <li ><a href="/Doc/tp_doc_3_sdk.html">SDK接入</a></li>
+                                <li ><a href="/Doc/tp_doc_4_api.html">SDK API</a></li>
+                                <li ><a href="/Doc/tp_doc_5_dev.html">开发与调试</a></li>
+                                <li ><a href="/Doc/tp_doc_6_rule.html">灰度与条件下发</a></li>
+                                <li ><a href="/Doc/tp_doc_7_config.html">在线参数</a></li>
+                                <li class="active"><a href="/Doc/tp_doc_8_monitor.html">实时监控<span class="new-tips">(New)</span></a></li>
+                                <li ><a href="/Doc/tp_doc_9_faq.html">常见问题</a></li>
+                                <li ><a href="/Doc/tp_doc_10_changelog.html">平台更新日志</a></li>
+                                <li><a href="https://github.com/Tencent/tinker/wiki" target="_blank">Tinker 使用文档</a></li>
+                                <li ><a href="/Doc/tp_doc_11_contract.html">用户协议</a></li>
+        
+                        </ul>
+                    </div>        </div>
+                <div class="doc-ctn">
+                    <h1>实时监控</h1>
+        <p>TinkerPatch 平台支持补丁状态的实时监控</p>
+        <p><img src="/Public/mdt/imgs/monitor.png" alt="" /></p>
+        <p>实时监控可以看到当前补丁下发成功的数量，以图表方式展示过去一天里每个小时的累计成功数，或过去七天里每天的成功数，帮你实时掌握补丁应用情况。</p>
+        <p>当有新的补丁下发时，若客户端拉取补丁失败，会自动在下次调用 <code>[fetchPatchUpdate]</code> 时重新拉取，重试 3 次失败后，会上报失败数据，在实时监控这里也可以看到每一条失败数据以及对应的错误码，方便排查问题。</p>
+        <p>监控信息只包括 补丁应用成功 以及 补丁应用失败错误码 这两种信息，不会上报其他信息。</p>
+        <h2>补丁的成功率计算</h2>
+        <p>需要注意的是，这里的<code>补丁下载成功数</code>只是指补丁已经下载并校验签名成功，而<code>补丁应用成功数</code>指的是真正成功加载补丁的用户数。</p>
+        <p>所以 <code>成功率 ＝ 补丁应用成功数 / 补丁下载成功数</code>。</p>
+        <h2>错误码含义</h2>
+        <p>由于存在多次重试，可能一个补丁会失败多次才能成功，所以补丁应用失败数会大于 [补丁下载成功数－补丁应用成功数]。</p>
+        <p>实时上报失败的错误码如下：</p>
+        <table>
+        <thead>
+        <tr>
+        <th>错误码</th>
+        <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>-1</td>
+        <td>下载补丁时异常</td>
+        </tr>
+        <tr>
+        <td>-2</td>
+        <td>合成补丁时异常</td>
+        </tr>
+        <tr>
+        <td>-3</td>
+        <td>加载补丁时异常</td>
+        </tr>
+        <tr>
+        <td>-100</td>
+        <td>补丁加载出现异常</td>
+        </tr>
+        <tr>
+        <td>-101</td>
+        <td>补丁加载进入安全模式</td>
+        </tr>
+        <tr>
+        <td>-102</td>
+        <td>补丁加载Dex时出现异常</td>
+        </tr>
+        <tr>
+        <td>-103</td>
+        <td>补丁加载Dex时检测失败</td>
+        </tr>
+        <tr>
+        <td>-104</td>
+        <td>补丁加载资源时出现异常</td>
+        </tr>
+        <tr>
+        <td>-105</td>
+        <td>补丁加载资源时检测失败</td>
+        </tr>
+        <tr>
+        <td>-106</td>
+        <td>补丁解释执行时获取instruction set出现异常</td>
+        </tr>
+        <tr>
+        <td>-107</td>
+        <td>补丁解释执行时命令行出错</td>
+        </tr>
+        <tr>
+        <td>-200</td>
+        <td>补丁合成出现异常</td>
+        </tr>
+        <tr>
+        <td>-201</td>
+        <td>补丁合成dexopt文件出现异常</td>
+        </tr>
+        <tr>
+        <td>-202</td>
+        <td>补丁合成patch.info文件损坏</td>
+        </tr>
+        <tr>
+        <td>-203</td>
+        <td>补丁合成dexopt文件不存在</td>
+        </tr>
+        <tr>
+        <td>-204</td>
+        <td>补丁合成dexopt文件格式异常</td>
+        </tr>
+        <tr>
+        <td>-205</td>
+        <td>补丁合成不支持JIT模式</td>
+        </tr>
+        <tr>
+        <td>-210</td>
+        <td>补丁合成签名校验失败</td>
+        </tr>
+        <tr>
+        <td>-211</td>
+        <td>补丁合成dex meta文件损坏</td>
+        </tr>
+        <tr>
+        <td>-212</td>
+        <td>补丁合成library meta文件损坏</td>
+        </tr>
+        <tr>
+        <td>-213</td>
+        <td>补丁合成无法从安装包找到tinkerId</td>
+        </tr>
+        <tr>
+        <td>-214</td>
+        <td>补丁合成无法从补丁包找到tinkerId</td>
+        </tr>
+        <tr>
+        <td>-215</td>
+        <td>补丁合成package meta文件损坏</td>
+        </tr>
+        <tr>
+        <td>-216</td>
+        <td>补丁合成tinkerId不相等</td>
+        </tr>
+        <tr>
+        <td>-217</td>
+        <td>补丁合成res meta文件损坏</td>
+        </tr>
+        <tr>
+        <td>-218</td>
+        <td>补丁合成存在不支持的类型</td>
+        </tr>
+        <tr>
+        <td>-230</td>
+        <td>补丁合成版本校验失败</td>
+        </tr>
+        <tr>
+        <td>-240</td>
+        <td>补丁合成补丁包失败</td>
+        </tr>
+        <tr>
+        <td>-241</td>
+        <td>补丁合成dex文件失败</td>
+        </tr>
+        <tr>
+        <td>-242</td>
+        <td>补丁合成library文件失败</td>
+        </tr>
+        <tr>
+        <td>-243</td>
+        <td>补丁合成资源文件失败</td>
+        </tr>
+        </tbody>
+        </table>        </div>
+            </div>
+        <div class="clear"></div>
+        <div id="fill"></div>
+        </div>
+        <div class="ft">
+          <span class="copyright">
+                TinkerPatch.com     © 2017 </span>
+          <span class="links">
+                  <a href="https://github.com/tinkerPatch">Github开源</a> | <a href="/Docs/contract">用户协议</a> |<a href="mailto:admin@tinkerpatch.com">联系我们</a></span>  </span>
+        </div>
+        
+        <script src="/Public/js/jquery-1.11.3.min.js"></script>
+        <script src="/Public/js/bootstrap.min.js?v=1.2"></script>
+        <script type="text/javascript">
+        
+          $('[data-toggle="tooltip"]').tooltip()
+        
+            var fillPadding = function() {
+                $('#fill').height($('#fill').height() + window.innerHeight - ($('.main').offset().top + $('.main').height() + $('.ft').height()))
+            }
+            $(window).resize(fillPadding);
+            fillPadding();
+            $('.ft').show();
+        </script>
+        
+          <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+            ga('create', 'UA-1895639-14', 'auto');
+            ga('send', 'pageview');
+          </script>
+        </body>
+        </html>
